@@ -1,11 +1,15 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import applyUserRoutes from './routes/user.route';
+import mongodbDatabase from './services/mongoService';
 
 dotenv.config();
+mongodbDatabase.connect();
 
 const app = express();
+const router = express.Router();
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8081;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -16,9 +20,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', (req, res) => {
-  res.send('data');
-});
+app.use('/ep/u1/', applyUserRoutes(router));
 
 app.listen(port, () => {
   console.log('Server is running on port : ', port);

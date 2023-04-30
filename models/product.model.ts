@@ -1,4 +1,4 @@
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, Types } from 'mongoose';
 
 const { Schema } = mongoose;
 
@@ -9,7 +9,7 @@ interface productData extends Document {
   category: Array<string>,
   manufactureDate: Date,
   expiryDate: Date,
-  owner: string,
+  owner: Types.ObjectId,
   status: string,
   createdAt: Date,
   updatedAt: Date | null,
@@ -22,7 +22,7 @@ const productSchema = new Schema<productData>({
   category: Array,
   manufactureDate: Date,
   expiryDate: Date,
-  owner: String,
+  owner: { type: Schema.Types.ObjectId, ref: 'User' },
   status: String,
   createdAt: Date,
   updatedAt: Date,

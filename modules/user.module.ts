@@ -46,7 +46,7 @@ const user = {
       return returnRes(400, msgs.somethingWrong);
     }
   },
-  loggedInUserData: async (req: Request) => {
+  user: async (req: Request) => {
     try {
       const userData = await User.findById(req.body.id);
       if (userData) {

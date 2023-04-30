@@ -1,15 +1,15 @@
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, Types } from 'mongoose';
 
 const { Schema } = mongoose;
 
 interface productPriceData extends Document {
-  productId: string,
+  productId: Types.ObjectId,
   createdAt: Date,
   updatedAt: Date | null,
 }
 
 const productPriceSchema = new Schema<productPriceData>({
-  productId: String,
+  productId: { type: Schema.Types.ObjectId, ref: 'Product' },
   createdAt: Date,
   updatedAt: Date,
 });

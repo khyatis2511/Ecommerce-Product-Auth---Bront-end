@@ -12,8 +12,8 @@ const userController = {
       res.status(200).send(result).end();
     });
   },
-  loggedInUserData: (req: Request, res: Response) => {
-    user.loggedInUserData(req).then((result) => {
+  user: (req: Request, res: Response) => {
+    user.user(req).then((result) => {
       res.status(200).send(result).end();
     });
   },

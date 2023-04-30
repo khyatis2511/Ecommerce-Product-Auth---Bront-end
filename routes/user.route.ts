@@ -4,9 +4,9 @@ import userController from '../controllers/user.controller';
 const applyUserRoutes = (app : Router) => {
   app.post('/register', userController.register);
   app.post('/login', userController.login);
-  app.post('/logged-in-user-data', userController.loggedInUserData);
-  app.get('/get-category', userController.getCategory);
-  app.post('/save-product', userController.saveProduct);
+  app.post('/user', userController.user);
+  app.get('/category', userController.getCategory);
+  app.post('/product', userController.saveProduct);
   return app;
 };
 

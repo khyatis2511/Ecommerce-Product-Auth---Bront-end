@@ -1,6 +1,10 @@
+/* eslint-disable no-underscore-dangle */
 import { Request } from 'express';
 import User from '../models/user.model';
 import { returnRes, msgs } from '../services/messages';
+import Category from '../models/category.model';
+import Product from '../models/product.model';
+import ProductPrice from '../models/productPrice.model';
 
 const user = {
   register: async (req : Request) => {
@@ -52,6 +56,55 @@ const user = {
       return returnRes(400, msgs.somethingWrong);
     } catch (error: any) {
       // console.log('loggedInUserData API:  ',error);
+      return returnRes(400, msgs.somethingWrong);
+    }
+  },
+  getCategory: async () => {
+    try {
+      const categoryData = await Category.find({});
+      if (categoryData) {
+        const data = categoryData.map((category) => ({
+          value: category._id,
+          text: category.name,
+        }));
+        return returnRes(200, msgs.dataSent, data);
+      }
+      return returnRes(400, msgs.somethingWrong);
+    } catch (error: any) {
+      // console.log('getCategory API:  ',error);
+      return returnRes(400, msgs.somethingWrong);
+    }
+  },
+  saveProduct: async (req: Request) => {
+    try {
+      const productData = {
+        ...req.body,
+        createdAt: new Date(),
+        updatedAt: null,
+      };
+      const product = new Product(productData);
+      const productDetails = await product.save();
+      if (productDetails) {
+        const { _id } = productDetails;
+        const data = {
+          productId: _id,
+          createdAt: new Date(),
+          updatedAt: null,
+        };
+        const productPriceData = new ProductPrice(data);
+        const productPriceDetails = await productPriceData.save();
+        const updateCategory = await Category.updateOne(
+          { _id: req.body.category },
+          { $push: { products: _id } },
+        );
+        if (productPriceDetails && updateCategory) {
+          return returnRes(200, msgs.dataSaved);
+        }
+        return returnRes(400, msgs.somethingWrong);
+      }
+      return returnRes(400, msgs.somethingWrong);
+    } catch (error: any) {
+      // console.log('saveProduct API:  ',error);
       return returnRes(400, msgs.somethingWrong);
     }
   },

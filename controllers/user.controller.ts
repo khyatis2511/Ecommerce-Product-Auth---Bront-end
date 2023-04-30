@@ -17,6 +17,16 @@ const userController = {
       res.status(200).send(result).end();
     });
   },
+  getCategory: (req: Request, res: Response) => {
+    user.getCategory().then((result) => {
+      res.status(200).send(result).end();
+    });
+  },
+  saveProduct: (req: Request, res: Response) => {
+    user.saveProduct(req).then((result) => {
+      res.status(200).send(result).end();
+    });
+  },
 };
 
 export default userController;

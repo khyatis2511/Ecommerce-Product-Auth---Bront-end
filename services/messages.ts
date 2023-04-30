@@ -17,5 +17,6 @@ export const msgs = {
   emailExist: 'Email Already Exists!!',
   loggedIn: 'Login successfully.',
   unauthorized: 'You are unauthorized.',
-  dataSent: 'Data sent successfully',
+  dataSent: 'Data sent successfully.',
+  dataSaved: 'Data save successfully.',
 };
